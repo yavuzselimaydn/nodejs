@@ -1,39 +1,29 @@
 #!/usr/bin/env node
 
-/**
- * Module dependencies.
- */
-
-var app = require('../app');
+//Modul bagımlılıkları yüklenir
+var app = require('../app');  
 var debug = require('debug')('api:server');
 var http = require('http');
+const Database = require("../db/Database");
+const { CONNECTION_STRING, PORT } =  require('../config');
 
-/**
- * Get port from environment and store in Express.
- */
 
-var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
+//Port ayarı
+var port = normalizePort(PORT);    //verilen port degerini sayısal degere donusturur.
+app.set('port', port);                       //express uygulamasının kulllanacagı portu ayarlar                
 
-/**
- * Create HTTP server.
- */
+//HTTP sunucu olusturma
+var server = http.createServer(app);  //express uygulamasını temel alarak http sunucusu olusturur.
 
-var server = http.createServer(app);
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+//Sunucuyu dinleme moduna alma
+server.listen(port);                  //sunucunun belirlene port uzerinden dinlenmesini baslattı.
+server.on('error', onError);          //sunucu hata ile karsıllatıgında onerror fonku calıstırır.
+server.on('listening', onListening);  //sunucu dinlenmeye basladıgında onlistening fonku calıstırır.
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
 
-/**
- * Normalize a port into a number, string, or false.
- */
-
-function normalizePort(val) {
+//Port Normalizasyonu
+function normalizePort(val) {       //girilen portu sayıya dondurur.
   var port = parseInt(val, 10);
 
   if (isNaN(port)) {
@@ -49,10 +39,7 @@ function normalizePort(val) {
   return false;
 }
 
-/**
- * Event listener for HTTP server "error" event.
- */
-
+//Hata İşleyici
 function onError(error) {
   if (error.syscall !== 'listen') {
     throw error;
@@ -64,11 +51,11 @@ function onError(error) {
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
-    case 'EACCES':
+    case 'EACCES':      //port icin yetki eksikliginde
       console.error(bind + ' requires elevated privileges');
       process.exit(1);
       break;
-    case 'EADDRINUSE':
+    case 'EADDRINUSE':      //port zaten kullanımda ise
       console.error(bind + ' is already in use');
       process.exit(1);
       break;
@@ -77,14 +64,13 @@ function onError(error) {
   }
 }
 
-/**
- * Event listener for HTTP server "listening" event.
- */
-
+//Sunucu dinlemeye basladıgında calısan fonk
 function onListening() {
-  var addr = server.address();
+  var addr = server.address();                //sunucunun dinlendigi port bilgisini alır.
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  debug('Listening on ' + bind);               //dinleme bilgilerini debug modulu loglar
+
+  new Database().connect({CONNECTION_STRING}); //veritabanına baglanmayı dener.
 }
