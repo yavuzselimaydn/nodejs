@@ -2,14 +2,15 @@ const mongoose = require("mongoose");
 
 const schema = mongoose.Schema(     //şema mongo dbde saklanacak belgelerin yapısını belirler.
     {
-        email: { type: String, required: true },
-        password: { type: String, required: true },
-        is_active: { type: Boolean, default: true },
+        email: { type: String, required: true, unique : true },
+        password: { type: String, required: true },         
+        is_active: { type: Boolean, default: true },      
         first_name: String,
         last_name: String,
         phone_number: String
     },
     {
+        versionKey : false,
         //timestaps : true
         timestamps: {
             createdAt: "created_at",
