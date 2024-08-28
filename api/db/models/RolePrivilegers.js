@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 const schema = mongoose.Schema(
     {
-        role_id: { type: mongoose.SchemaTypes.ObjectId, required: true },
-        permission: { type: String, required: true },
-        created_by: { type: mongoose.SchemaTypes.ObjectId, required: true }
+        role_id: { type: mongoose.SchemaTypes.ObjectId, required: true },      //dbdeki roles tablosundaki id
+        permissions: { type: String, required: true },                         //role_privileges deki key alanına denk gelir
+        created_by: { type: mongoose.SchemaTypes.ObjectId}
     },
     {
         versionKey: false,
