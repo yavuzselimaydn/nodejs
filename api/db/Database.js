@@ -1,3 +1,4 @@
+/*global process*/
 const mongoose = require("mongoose");
 
 let instance = null;                      //bu clasın sadece bir ornegi olusturulsun diye tanımladım
