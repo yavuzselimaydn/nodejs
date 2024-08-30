@@ -1,3 +1,4 @@
+/*global process,__dirname */
 if(process.env.NODE_ENV != "production"){              //eger uygulama production modunda değil ise .env dosyasını yukler.
   require("dotenv").config();
 }             

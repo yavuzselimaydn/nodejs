@@ -7,12 +7,12 @@ const Enum = require("../config/Enum");                                 //sabit 
 const AuditLogs = require("../lib/AuditLogs");
 const logger = require("../lib/logger/LoggerClass");
 
-router.get('/', async (req, res, next) => {
+router.get('/', async (req, res) => {
     try {
         let categories = await Categories.find({});                     //db ye sorgu atar ve tum categorileri alır.
         res.json(Response.successResponse(categories));
     } catch (error) {
-        let errorResponse = Response.errorResponse(err);
+        let errorResponse = Response.errorResponse(error);
         res
             .status(errorResponse.code)                                    //yanıtın hhtp durum kodunu ayarladım
             .json(errorResponse);                                          //json formatinda yanıt gonderir.
@@ -20,7 +20,7 @@ router.get('/', async (req, res, next) => {
 });
 
 
-router.post("/add" , async (req,res) => {
+router.post("/add" , async (req,res,next) => {
     let body = req.body;
     try {
         if(!body.name) throw new CustomError(Enum.HTTP_CODES.BAD_REQUEST,"Validation Error!", "name fields must be filled")

@@ -2,8 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 const Response = require("../lib/Response");
-const CustomError = require("../lib/Error");
-const Enum = require("../config/Enum");
 const AuditLogs = require("../db/models/AuditLogs");
 const moment = require("moment");
 
@@ -15,10 +13,10 @@ router.post("/", async (req,res) => {
         let skip = body.skip;                    //sorgu sonucundan kac tane atlanarak getirilecegi
         let limit = body.limit;                  //sorgu sonucundan kac tane getirilecegi
 
-        if(typeof skip !== "numeric"){
+        if(typeof skip !== "number"){
             skip = 0;
         }
-        if(typeof body.limit !== "numeric" || body.limit > 500){
+        if(typeof body.limit !== "number" || body.limit > 500){
             limit = 500;
         }
 
