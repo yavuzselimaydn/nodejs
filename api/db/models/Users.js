@@ -26,7 +26,7 @@ const schema = mongoose.Schema(     //şema mongo dbde saklanacak belgelerin yap
 class Users extends mongoose.Model {
 
     validPassword(password){
-        return bcrypt.compareSync(password,this.password);
+        return bcrypt.compareSync(password,this.password);  //saglanan sifre ile dbdeki sifreyi hashlenmis hallerini karsılastırır: true false doner.
     }
 
     static validateFieldsBeforeAuth(email,password){
