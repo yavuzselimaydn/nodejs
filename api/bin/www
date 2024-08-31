@@ -9,8 +9,8 @@ const { CONNECTION_STRING, PORT } =  require('../config');
 
 
 //Port ayarı
-var port = normalizePort(PORT);    //verilen port degerini sayısal degere donusturur.
-app.set('port', port);                       //express uygulamasının kulllanacagı portu ayarlar                
+var port = normalizePort(PORT);       //verilen port degerini sayısal degere donusturur.
+app.set('port', port);                //express uygulamasının kulllanacagı portu ayarlar                
 
 //HTTP sunucu olusturma
 var server = http.createServer(app);  //express uygulamasını temel alarak http sunucusu olusturur.
@@ -23,10 +23,10 @@ server.on('listening', onListening);  //sunucu dinlenmeye basladıgında onliste
 
 
 //Port Normalizasyonu
-function normalizePort(val) {       //girilen portu sayıya dondurur.
+function normalizePort(val) {        //girilen portu sayıya dondurur.
   var port = parseInt(val, 10);
 
-  if (isNaN(port)) {
+  if (isNaN(port)) {                 //NaN : Not a Number => sayı degılse true doner.
     // named pipe
     return val;
   }
