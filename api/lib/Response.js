@@ -1,5 +1,8 @@
 const Enum = require("../config/Enum");
 const CustomError = require("./Error");
+const {DEFAULT_LANG} = require("../config");
+
+const i18n = new (require("./i18n"))(DEFAULT_LANG);
 
 class Response {
     constructor() { }
@@ -8,7 +11,7 @@ class Response {
         return {code,data};
     }
 
-    static errorResponse(error){                     //hata durumlarını yonetir.
+    static errorResponse(error,lang){                     //hata durumlarını yonetir.
         console.error(error)
 
         if(error instanceof CustomError){  //eger hata custom error ise hata ozellestirilmis hata oldugu icin bu sekilde doner hata bilgilerini 
@@ -24,8 +27,8 @@ class Response {
             return{                           //hata custom erorr degilse genel bir hata doner
                 code : Enum.HTTP_CODES.CONFLICT,
                 error: {
-                    message: "Already Exists!",
-                    description : "Already Exists!",
+                    message: i18n.translate("COMMON.ALREADY_EXISTS",lang),
+                    description : i18n.translate("COMMON.ALREADY_EXISTS",lang),
                 }
             };
         }
@@ -34,7 +37,7 @@ class Response {
         return{                           //hata custom erorr degilse genel bir hata doner
             code : Enum.HTTP_CODES.INT_SERVER_ERROR,
             error: {
-                message: "Unknown Error!",
+                message: i18n.translate("COMMON.UNKNOWN_ERROR",lang),
                 description : error.message,
             }
         }
