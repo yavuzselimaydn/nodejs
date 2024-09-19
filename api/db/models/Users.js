@@ -3,7 +3,7 @@ const Enum = require("../../config/Enum");
 const CustomError = require("../../lib/Error");
 const is = require("is_js");
 const bcrypt = require("bcrypt-nodejs");
-
+const {DEFAULT_LANG} = require("../../config");
 const schema = mongoose.Schema(     //şema mongo dbde saklanacak belgelerin yapısını belirler.
     {
         email: { type: String, required: true, unique : true },
@@ -11,7 +11,8 @@ const schema = mongoose.Schema(     //şema mongo dbde saklanacak belgelerin yap
         is_active: { type: Boolean, default: true },      
         first_name: String,
         last_name: String,
-        phone_number: String
+        phone_number: String,
+        language : {type : String , default : DEFAULT_LANG}
     },
     {
         versionKey : false,
